@@ -1,0 +1,7 @@
+joblib
+pandas
+scikit-learn
+fastapi
+uvicorn
+huggingface_hub
+dotenv
