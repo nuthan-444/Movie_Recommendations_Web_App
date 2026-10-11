@@ -1,12 +1,10 @@
 from dotenv import load_dotenv
-import os
 import joblib
 from sklearn.metrics.pairwise import cosine_similarity
-import requests
 from huggingface_hub import hf_hub_download
 
 load_dotenv()
-TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+
 
 
 

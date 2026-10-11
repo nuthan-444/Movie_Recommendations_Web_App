@@ -2,9 +2,7 @@ from dotenv import load_dotenv
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-import requests
 from fastapi.middleware.cors import CORSMiddleware
-import joblib
 from recommend import recommend
 from movies_title import getRandomMovies
 
