@@ -61,26 +61,26 @@ from huggingface_hub import hf_hub_download
 from sklearn.metrics.pairwise import cosine_similarity
 
 #for local running
-DF = joblib.load('./model/DF.pkl')
-vectors = joblib.load('./model/vectors.pkl')
+# DF = joblib.load('./model/DF.pkl')
+# vectors = joblib.load('./model/vectors.pkl')
 
 
 # Download model files from Hugging Face
-# DF_path = hf_hub_download(
-#     repo_id="nuthan-444/Movie_Recommendation_System",
-#     filename="DF.pkl",
-#     repo_type="model"
-# )
+DF_path = hf_hub_download(
+    repo_id="nuthan-444/Movie_Recommendation_System",
+    filename="DF.pkl",
+    repo_type="model"
+)
 
-# vectors_path = hf_hub_download(
-#     repo_id="nuthan-444/Movie_Recommendation_System",
-#     filename="vectors.pkl",
-#     repo_type="model"
-# )
+vectors_path = hf_hub_download(
+    repo_id="nuthan-444/Movie_Recommendation_System",
+    filename="vectors.pkl",
+    repo_type="model"
+)
 
 # Load model files once when the module initializes
-# DF = joblib.load(DF_path)
-# vectors = joblib.load(vectors_path)
+DF = joblib.load(DF_path)
+vectors = joblib.load(vectors_path)
 
 
 def recommend(movie):
