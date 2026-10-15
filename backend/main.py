@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from recommend import recommend
-from movies_title import getRandomMovies
+from movies_title import getRandomMovies, getSimilarityMovies
 
 load_dotenv()
 
@@ -23,6 +23,7 @@ app.add_middleware(
 
 class MovieRecRequest(BaseModel):
     movie: str
+    n: int
 
 
 
@@ -75,9 +76,11 @@ def getRandomMoviesRouter(n: int):
 @app.post("/api/recommend")
 def recommendation(data:MovieRecRequest):
     movie=data.movie
+    n=data.n
 
     try :
-        recommendations = recommend(movie)
+        # recommendations = recommend(movie)
+        recommendations = getSimilarityMovies(movie,n)
 
         if(len(recommendations)<=0):
             return {
