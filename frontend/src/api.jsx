@@ -8,7 +8,7 @@ const api = axios.create({
 });
 
 /* ---------- random movies ---------- */
-export async function getRandomMovies(n = 6) {
+export async function getRandomMovies(n) {
   try {
     const res = await api.get(`/api/getRandomMovies/${n}`);
     const data = res.data;
