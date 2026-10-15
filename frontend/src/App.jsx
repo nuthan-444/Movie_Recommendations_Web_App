@@ -76,7 +76,7 @@ export default function App() {
     }, 1000);
 
     try {
-      // Execute the original recommendation logic alongside the thinking timer delay
+      // Execute the original recommendation logic alongside the thinking timer delay.
       const [results] = await Promise.all([
         getRecommendations(movie, count),
         new Promise((resolve) => setTimeout(resolve, targetTimeMs)),
