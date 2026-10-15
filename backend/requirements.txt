@@ -6,3 +6,4 @@ uvicorn
 huggingface_hub
 dotenv
 cors
+fastapi-cors
