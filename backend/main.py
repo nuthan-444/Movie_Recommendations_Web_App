@@ -3,7 +3,7 @@ import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from recommend import recommend
+# from recommend import recommend
 from movies_title import getRandomMovies, getSimilarityMovies
 
 load_dotenv()
