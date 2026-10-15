@@ -35,7 +35,7 @@ export default function App() {
     setLoadingRandom(true);
     setError("");
     try {
-      const movies = await getRandomMovies(6);
+      const movies = await getRandomMovies(5);
       setRandomMovies(movies);
     } catch (err) {
       setError(err.message);

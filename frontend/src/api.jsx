@@ -9,25 +9,29 @@ const api = axios.create({
 
 /* ---------- random movies ---------- */
 export async function getRandomMovies(n) {
+  let res;
+  
+  // 1. Handle Network or HTTP errors (e.g., 404, 500, no internet)
   try {
-    const res = await api.get(`/api/getRandomMovies/${n}`);
-    const data = res.data;
-
-    // Backend returns 200 even on logical errors → check status field
-    if (!data.status) {
-      throw new Error(data.message || data.error || "Failed to fetch random movies");
-    }
-    return data.random_movies;
+    res = await api.get(`/api/getRandomMovies/${n}`);
   } catch (err) {
     if (err.response) {
       throw new Error(
         err.response.data?.message ||
-          err.response.data?.error ||
-          "Server error"
+        err.response.data?.error ||
+        "Server error"
       );
     }
     throw new Error(err.message || "Network error");
   }
+
+  // 2. Handle Backend Logical errors (HTTP 200, but application logic failed)
+  const data = res?.data;
+  if (!data || data.status === false) {
+    throw new Error(data?.message || data?.error || "Failed to fetch random movies");
+  }
+
+  return data.random_movies;
 }
 
 /* ---------- recommendations ---------- */
