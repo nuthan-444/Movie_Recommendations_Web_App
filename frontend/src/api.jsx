@@ -11,7 +11,7 @@ const api = axios.create({
 export async function getRandomMovies(n) {
   let res;
   
-  // 1. Handle Network or HTTP errors (e.g., 404, 500, no internet)
+  // 1. Handle Network or HTTP errors (404, 500, etc.)
   try {
     res = await api.get(`/api/getRandomMovies/${n}`);
   } catch (err) {
@@ -25,9 +25,9 @@ export async function getRandomMovies(n) {
     throw new Error(err.message || "Network error");
   }
 
-  // 2. Handle Backend Logical errors (HTTP 200, but application logic failed)
+  // 2. Handle Backend Logical errors (HTTP 200, but logic failed)
   const data = res?.data;
-  if (!data || data.status === false) {
+  if (!data || !data.status) {
     throw new Error(data?.message || data?.error || "Failed to fetch random movies");
   }
 
@@ -35,23 +35,28 @@ export async function getRandomMovies(n) {
 }
 
 /* ---------- recommendations ---------- */
-export async function getRecommendations(movie,n) {
-  try {
-    const res = await api.post("/api/recommend", { movie,n });
-    const data = res.data;
+export async function getRecommendations(movie, n) {
+  let res;
 
-    if (!data.status) {
-      throw new Error(data.message || data.error || "Failed to get recommendations");
-    }
-    return data.recommendMovies;
+  // 1. Handle Network or HTTP errors (404, 500, etc.)
+  try {
+    res = await api.post("/api/recommend", { movie, n });
   } catch (err) {
     if (err.response) {
       throw new Error(
         err.response.data?.message ||
-          err.response.data?.error ||
-          "Server error"
+        err.response.data?.error ||
+        "Server error"
       );
     }
     throw new Error(err.message || "Network error");
   }
+
+  // 2. Handle Backend Logical errors (HTTP 200, but logic failed)
+  const data = res?.data;
+  if (!data || !data.status) {
+    throw new Error(data?.message || data?.error || "Failed to get recommendations");
+  }
+
+  return data.recommendMovies;
 }
