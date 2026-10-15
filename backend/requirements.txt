@@ -5,3 +5,4 @@ fastapi
 uvicorn
 huggingface_hub
 dotenv
+cors
