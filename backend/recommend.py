@@ -54,56 +54,62 @@
 #     return top5_movie_recommend
 
 
-# Optimized Code
-import joblib
-import numpy as np
-from huggingface_hub import hf_hub_download
-from sklearn.metrics.pairwise import cosine_similarity
-
-#for local running
-# DF = joblib.load('./model/DF.pkl')
-# vectors = joblib.load('./model/vectors.pkl')
 
 
-# Download model files from Hugging Face
-DF_path = hf_hub_download(
-    repo_id="nuthan-444/Movie_Recommendation_System",
-    filename="DF.pkl",
-    repo_type="model"
-)
 
-vectors_path = hf_hub_download(
-    repo_id="nuthan-444/Movie_Recommendation_System",
-    filename="vectors.pkl",
-    repo_type="model"
-)
-
-# Load model files once when the module initializes
-DF = joblib.load(DF_path)
-vectors = joblib.load(vectors_path)
+# # Optimized Code
 
 
-def recommend(movie):
-    matching_movies = DF[DF["title"] == movie]
 
-    if matching_movies.empty:
-        raise ValueError(f"Movie '{movie}' not found")
+# import joblib
+# import numpy as np
+# from huggingface_hub import hf_hub_download
+# from sklearn.metrics.pairwise import cosine_similarity
 
-    movie_index = DF.index.get_loc(matching_movies.index[0])
+# #for local running
+# # DF = joblib.load('./model/DF.pkl')
+# # vectors = joblib.load('./model/vectors.pkl')
 
-    distances = cosine_similarity(vectors[movie_index:movie_index + 1],vectors).ravel()
 
-    movie_list = sorted(enumerate(distances), key=lambda x: x[1], reverse=True)
+# # Download model files from Hugging Face
+# DF_path = hf_hub_download(
+#     repo_id="nuthan-444/Movie_Recommendation_System",
+#     filename="DF.pkl",
+#     repo_type="model"
+# )
 
-    top5_movie_recommend = []
+# vectors_path = hf_hub_download(
+#     repo_id="nuthan-444/Movie_Recommendation_System",
+#     filename="vectors.pkl",
+#     repo_type="model"
+# )
 
-    for index, score in movie_list:
-        if index == movie_index:
-            continue
+# # Load model files once when the module initializes
+# DF = joblib.load(DF_path)
+# vectors = joblib.load(vectors_path)
 
-        top5_movie_recommend.append(DF.iloc[index]["title"])
 
-        if len(top5_movie_recommend) == 5:
-            break
+# def recommend(movie):
+#     matching_movies = DF[DF["title"] == movie]
 
-    return top5_movie_recommend
+#     if matching_movies.empty:
+#         raise ValueError(f"Movie '{movie}' not found")
+
+#     movie_index = DF.index.get_loc(matching_movies.index[0])
+
+#     distances = cosine_similarity(vectors[movie_index:movie_index + 1],vectors).ravel()
+
+#     movie_list = sorted(enumerate(distances), key=lambda x: x[1], reverse=True)
+
+#     top5_movie_recommend = []
+
+#     for index, score in movie_list:
+#         if index == movie_index:
+#             continue
+
+#         top5_movie_recommend.append(DF.iloc[index]["title"])
+
+#         if len(top5_movie_recommend) == 5:
+#             break
+
+#     return top5_movie_recommend
